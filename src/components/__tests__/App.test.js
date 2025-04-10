@@ -63,3 +63,18 @@ test("should return the addition of numbers when multiple valid numbers are prov
   const result=screen.getByText("Result: 8");
   expect(result).toBeInTheDocument();
 })
+
+test("should display an alert when negative numbers are provided",()=>{
+  render(<App/>)
+  global.alert = jest.fn();
+
+  const inputElement = screen.getByRole("textbox");
+  const calculateButton = screen.getByRole("button");
+
+  fireEvent.change(inputElement, {target:{value:"-2,4,-6"}});
+  fireEvent.click(calculateButton);
+
+  expect(global.alert).toHaveBeenCalledWith(
+    "Negative numbers are not allowed: -2,-6"
+  );
+});
