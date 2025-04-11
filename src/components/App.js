@@ -10,9 +10,14 @@ function App() {
       return;
     }
 
+    const delimiter =
+      !isNaN(input[0]) || input[0] === "-" ? /[\n,]+/ : input[0];
+    console.log(input[0]);
+
     const numbersArray = input
-      .split(/[\n,]+/)
+      .split(delimiter)
       .map((number) => parseInt(number));
+
     const validNumbers = numbersArray.filter((number) => !isNaN(number));
 
     const negativeNumbers = validNumbers.filter((number) => number < 0);
