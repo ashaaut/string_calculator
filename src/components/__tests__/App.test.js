@@ -24,3 +24,16 @@ test("should return 0 if empty value is provided", () => {
   const result = screen.getByText("Result: 0");
   expect(result).toBeInTheDocument();
 });
+
+test("should return the number when a single number is provided", () => {
+  render(<App />);
+
+  const inputElement = screen.getByRole("textbox");
+  const calculateButton = screen.getByRole("button");
+
+  fireEvent.change(inputElement, { target: { value: "1" } });
+  fireEvent.click(calculateButton);
+
+  const result = screen.getByText("Result: 1");
+  expect(result).toBeInTheDocument();
+});

@@ -4,8 +4,12 @@ function App() {
   const [inputString, setInputString] = useState("");
   const [sum, setSum] = useState(0);
 
-  const calculateSum = () => {
-    setSum(0);
+  const calculateSum = (input) => {
+    if (!input.trim()) {
+      setSum(0);
+      return;
+    }
+    setSum(input);
   };
   return (
     <div className="App">
