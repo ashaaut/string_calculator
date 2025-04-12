@@ -50,3 +50,16 @@ test("should return the addition of numbers when multiple comman separeted valid
   const result = screen.getByText("Result: 12");
   expect(result).toBeInTheDocument();
 });
+
+test("should return the addition of numbers when multiple valid numbers  provided in new lines", () => {
+  render(<App />);
+
+  const inputElement = screen.getByRole("textbox");
+  const calculateButton = screen.getByRole("button");
+
+  fireEvent.change(inputElement, { target: { value: "1\n2\n5\n3" } });
+  fireEvent.click(calculateButton);
+
+  const result = screen.getByText("Result: 11");
+  expect(result).toBeInTheDocument();
+});
