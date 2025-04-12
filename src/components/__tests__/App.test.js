@@ -63,3 +63,30 @@ test("should return the addition of numbers when multiple valid numbers  provide
   const result = screen.getByText("Result: 11");
   expect(result).toBeInTheDocument();
 });
+
+test("should return the addition of numbers when multiple valid numbers are provided in new lines or comma separated", () => {
+  render(<App />);
+
+  const inputElement = screen.getByRole("textbox");
+  const calculateButton = screen.getByRole("button");
+
+  fireEvent.change(inputElement, { target: { value: "1\n2\n5,3" } });
+  fireEvent.click(calculateButton);
+
+  const result = screen.getByText("Result: 11");
+  expect(result).toBeInTheDocument();
+});
+
+test("should return sum of numbers when beginning of the string will contain a separate line for delimiter", () => {
+  render(<App />);
+  global.alert = jest.fn();
+
+  const inputElement = screen.getByRole("textbox");
+  const calculateButton = screen.getByRole("button");
+
+  fireEvent.change(inputElement, { target: { value: "//;\n1;3;5" } });
+  fireEvent.click(calculateButton);
+
+  const result = screen.getByText("Result: 9");
+  expect(result).toBeInTheDocument();
+});
