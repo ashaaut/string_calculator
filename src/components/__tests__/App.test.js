@@ -92,6 +92,20 @@ describe("String calculator", () => {
     expect(result).toBeInTheDocument();
   });
 
+  test("should return sum of numbers when beginning of the string will contain a separate line for delimiter *", () => {
+    render(<App />);
+    global.alert = jest.fn();
+
+    const inputElement = screen.getByRole("textbox");
+    const calculateButton = screen.getByRole("button");
+
+    fireEvent.change(inputElement, { target: { value: "//\*\n1\*3\*5" } });
+    fireEvent.click(calculateButton);
+
+    const result = screen.getByText("Result: 9");
+    expect(result).toBeInTheDocument();
+  });
+
   test("should throw an error when negative numbers are provided", () => {
     render(<App />);
 
