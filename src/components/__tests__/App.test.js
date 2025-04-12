@@ -37,3 +37,16 @@ test("should return the number when a single number is provided", () => {
   const result = screen.getByText("Result: 1");
   expect(result).toBeInTheDocument();
 });
+
+test("should return the addition of numbers when multiple comman separeted valid numbers are provided", () => {
+  render(<App />);
+
+  const inputElement = screen.getByRole("textbox");
+  const calculateButton = screen.getByRole("button");
+
+  fireEvent.change(inputElement, { target: { value: "1,5,6" } });
+  fireEvent.click(calculateButton);
+
+  const result = screen.getByText("Result: 12");
+  expect(result).toBeInTheDocument();
+});

@@ -9,7 +9,9 @@ function App() {
       setSum(0);
       return;
     }
-    setSum(input);
+    const numbersArray = input.split(",").map((number) => parseInt(number));
+    let totalSum = numbersArray.reduce((acc, curr) => acc + curr, 0);
+    setSum(totalSum);
   };
   return (
     <div className="App">
