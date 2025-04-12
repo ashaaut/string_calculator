@@ -1,46 +1,25 @@
 import { useState } from "react";
-
+import { calculateSum } from "../utils/stringCalculator";
 function App() {
   const [inputString, setInputString] = useState("");
   const [sum, setSum] = useState(0);
+  const [error, setError] = useState("");
 
-  const hasCustomDelimiter = (input) => {
-    return /^\/\//.test(input);
-  };
-
-  const getCustomDelimiter = (input) => {
-    return input.charAt(2);
-  };
-
-  const getExpression = (input) => {
-    return input.substring(3);
-  };
-
-  const calculateSum = (input) => {
-    if (!input.trim()) {
-      setSum(0);
-      return;
+  const handleCalculate = () => {
+    try {
+      const result = calculateSum(inputString);
+      setSum(result);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
     }
-    let delimiter = /,|\n/g;
-    let expression = input;
-
-    if (hasCustomDelimiter(input)) {
-      delimiter = new RegExp(getCustomDelimiter(input), "g");
-      expression = getExpression(input);
-    }
-    const numbersArray = expression
-      .split(delimiter)
-      .map((number) => parseInt(number));
-
-    let totalSum = numbersArray.reduce((acc, curr) => acc + curr, 0);
-    setSum(totalSum);
   };
 
   return (
     <div className="App">
       <textarea onChange={(e) => setInputString(e.target.value)} />
-      <button onClick={() => calculateSum(inputString)}>Calculate</button>
-      <div>Result: {sum}</div>
+      <button onClick={handleCalculate}>Calculate</button>
+      {error ? <div>{error}</div> : <div>Result: {sum}</div>}
     </div>
   );
 }

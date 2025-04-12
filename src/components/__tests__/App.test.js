@@ -38,7 +38,7 @@ test("should return the number when a single number is provided", () => {
   expect(result).toBeInTheDocument();
 });
 
-test("should return the addition of numbers when multiple comman separeted valid numbers are provided", () => {
+test("should return the addition of numbers when multiple comma separeted valid numbers are provided", () => {
   render(<App />);
 
   const inputElement = screen.getByRole("textbox");
@@ -88,5 +88,18 @@ test("should return sum of numbers when beginning of the string will contain a s
   fireEvent.click(calculateButton);
 
   const result = screen.getByText("Result: 9");
+  expect(result).toBeInTheDocument();
+});
+
+test("should throw an error when negative numbers are provided", () => {
+  render(<App />);
+
+  const inputElement = screen.getByRole("textbox");
+  const calculateButton = screen.getByRole("button");
+
+  fireEvent.change(inputElement, { target: { value: "-2,4,-6" } });
+  fireEvent.click(calculateButton);
+
+  const result = screen.getByText("Negative numbers are not allowed: -2,-6");
   expect(result).toBeInTheDocument();
 });
