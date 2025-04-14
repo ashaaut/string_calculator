@@ -22,6 +22,13 @@ const escapeRegExp = (customDelimiter) => {
   return customDelimiter.replace(/[.*+?^$]/g, "\\$&");
 };
 
+const getNumbersArray = (expression, delimiterRegex) => {
+  return expression
+    .split(delimiterRegex)
+    .map((number) => parseInt(number))
+    .filter((number) => number <= 1000);
+};
+
 export const calculateSum = (input) => {
   if (!input.trim()) {
     return 0;
@@ -34,9 +41,7 @@ export const calculateSum = (input) => {
     delimiterRegex = new RegExp(escapeRegExp(customDelimiter), "g");
     expression = getExpression(input);
   }
-  const numbersArray = expression
-    .split(delimiterRegex)
-    .map((number) => parseInt(number));
+  const numbersArray = getNumbersArray(expression, delimiterRegex);
 
   validateNumbers(numbersArray);
 
